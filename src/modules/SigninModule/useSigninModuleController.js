@@ -1,22 +1,30 @@
+import { useCallback, useEffect } from "react";
 import { useSessionCreate } from "../../queries/authentication";
+import { useNavigate } from "react-router-dom";
 
 const useSigninModuleController = () => {
+  const navigate = useNavigate();
   const {
-    mutateAsync: login,
+    mutate: login,
     isLoading: isSigningIn,
     isError: failedToSignIn,
+    isSuccess: successfulSignIn,
+    isLoading: signingIn,
   } = useSessionCreate();
 
+  const onSignupSuccess = useCallback(() => navigate("/home"), [navigate]);
+
+  const handleLogin = (data) => {
+    login(data, {
+      onSuccess: onSignupSuccess,
+    });
+  };
+
   return {
-    handleLogin: (data) => {
-      console.log(
-        "🚀 ~ file: useSigninModuleController.js:4 ~ useSigninModuleController ~ data:",
-        data
-      );
-      login(data);
-    },
+    handleLogin,
     isSigningIn,
     failedToSignIn,
+    successfulSignIn,
   };
 };
 

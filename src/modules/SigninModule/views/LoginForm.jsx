@@ -13,6 +13,7 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
+import patterns from "../../../helpers/patterns";
 
 const LoginForm = ({ handleLogin }) => {
   const {
@@ -37,21 +38,16 @@ const LoginForm = ({ handleLogin }) => {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign in
+          Login
         </Typography>
         <Box
           component="form"
-          onSubmit={handleSubmit((formData) => {
-            console.log(
-              "🚀 ~ file: LoginForm.jsx:45 ~ onSubmit={handleSubmit ~ formData:",
-              formData
-            );
-            handleLogin(formData);
-          })}
           noValidate
+          onSubmit={handleSubmit((formData) => handleLogin(formData))}
           sx={{ mt: 1 }}
         >
           <TextField
+            error={!!errors?.email}
             margin="normal"
             required
             fullWidth
@@ -60,9 +56,17 @@ const LoginForm = ({ handleLogin }) => {
             name="email"
             autoComplete="email"
             autoFocus
-            {...register("email", { required: true })}
+            helperText={errors?.email?.message}
+            {...register("email", {
+              required: "This field is required",
+              pattern: {
+                value: patterns.email,
+                message: "This should be an email.",
+              },
+            })}
           />
           <TextField
+            error={!!errors?.password}
             margin="normal"
             required
             fullWidth
@@ -71,7 +75,10 @@ const LoginForm = ({ handleLogin }) => {
             type="password"
             id="password"
             autoComplete="current-password"
-            {...register("password", { required: true })}
+            helperText={errors?.password?.message}
+            {...register("password", {
+              required: "This field is required",
+            })}
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}

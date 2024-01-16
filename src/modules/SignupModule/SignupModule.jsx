@@ -5,6 +5,7 @@ import SignupForm from "./views/SignupForm";
 function SignupModule() {
   const { handleSignup, failedToSignUp, successfulSignUp } =
     useSignupModuleController();
+
   return (
     <>
       <SignupForm handleSignup={handleSignup} />
