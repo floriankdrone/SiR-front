@@ -1,16 +1,14 @@
 import Feedback from "../../shared_views/Feedback";
-import LoginForm from "./views/LoginForm";
+import SigninForm from "./views/SigninForm";
 import useSigninModuleController from "./useSigninModuleController";
 
 function SigninModule() {
-  const { handleLogin, failedToSignIn, successfulSignIn } =
-    useSigninModuleController();
+  const { handleSignin, failedToSignIn } = useSigninModuleController();
 
   return (
     <>
-      <LoginForm handleLogin={handleLogin} />
+      <SigninForm handleSignin={handleSignin} />
       {failedToSignIn ? <Feedback message={"Failed to Login"} /> : ""}
-      {successfulSignIn ? <Feedback message={"Welcome"} /> : ""}
     </>
   );
 }

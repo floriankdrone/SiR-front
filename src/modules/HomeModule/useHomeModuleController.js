@@ -6,13 +6,11 @@ export const useHomeModuleController = () => {
   const { isPending, data: postList = [], refetch } = usePostsIndex();
   const {
     mutate: addDonation,
-    isLoading,
     isSuccess: donationCreated,
     isError: donationNotCreated,
   } = useDonationsCreate();
   const {
     mutateAsync: addPost,
-    isLoading: creatingPost,
     isSuccess: postCreated,
     isError: postNotCreated,
   } = usePostsCreate();
@@ -24,15 +22,19 @@ export const useHomeModuleController = () => {
     [addPost, refetch]
   );
 
+  const handlePriceChange = useCallback(
+    (index, id, price) => {
+      addDonation({ postId: id, price });
+      if (postList.at(index)?.id === id) refetch();
+    },
+    [addDonation, refetch]
+  );
+
   return {
     donationCreated,
     donationNotCreated,
-    handlePriceChange: (index, id, price) => {
-      addDonation({ postId: id, price });
-
-      if (postList.at(index)?.id === id) refetch();
-    },
     handlePostCreation,
+    handlePriceChange,
     isPending,
     postCreated,
     postList,

@@ -3,14 +3,12 @@ import useSignupModuleController from "./useSignupModuleController";
 import SignupForm from "./views/SignupForm";
 
 function SignupModule() {
-  const { handleSignup, failedToSignUp, successfulSignUp } =
-    useSignupModuleController();
+  const { handleSignup, failedToSignUp } = useSignupModuleController();
 
   return (
     <>
       <SignupForm handleSignup={handleSignup} />
       {failedToSignUp ? <Feedback message={"Failed to register"} /> : ""}
-      {successfulSignUp ? <Feedback message={"Successfully register"} /> : ""}
     </>
   );
 }

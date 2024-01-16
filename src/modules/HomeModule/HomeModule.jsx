@@ -3,6 +3,8 @@ import { Skeleton } from "@mui/material";
 import Post from "./views/Post";
 import Form from "./views/Form";
 import Feedback from "../../shared_views/Feedback";
+import { useLocation } from "react-router-dom";
+import { useEffect } from "react";
 
 function HomeModule() {
   const {
@@ -16,8 +18,16 @@ function HomeModule() {
     postNotCreated,
   } = useHomeModuleController();
 
+  const location = useLocation();
+  const toastMessage = location.state?.toastMessage;
+
+  useEffect(() => {
+    window.history.replaceState({ toastMessage: undefined }, "");
+  }, undefined);
+
   return (
     <>
+      {toastMessage ? <Feedback message={toastMessage} /> : ""}
       <div style={{ marginBottom: "75px" }}>
         {isPending ? (
           <>

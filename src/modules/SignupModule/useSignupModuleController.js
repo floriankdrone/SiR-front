@@ -11,7 +11,10 @@ const useSignupModuleController = () => {
     isSuccess: successfulSignUp,
   } = useAuthenticationCreate();
 
-  const onSignupSuccess = useCallback(() => navigate("/home"), [navigate]);
+  const onSignupSuccess = useCallback(
+    () => navigate("/home", { state: { toastMessage: "Welcome" } }),
+    [navigate]
+  );
 
   const handleSignup = useCallback(
     (data) => register(data, { onSuccess: onSignupSuccess }),

@@ -15,7 +15,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import patterns from "../../../helpers/patterns";
 
-const LoginForm = ({ handleLogin }) => {
+const SigninForm = ({ handleSignin }) => {
   const {
     register,
     handleSubmit,
@@ -43,7 +43,7 @@ const LoginForm = ({ handleLogin }) => {
         <Box
           component="form"
           noValidate
-          onSubmit={handleSubmit((formData) => handleLogin(formData))}
+          onSubmit={handleSubmit((formData) => handleSignin(formData))}
           sx={{ mt: 1 }}
         >
           <TextField
@@ -110,4 +110,4 @@ const LoginForm = ({ handleLogin }) => {
   );
 };
 
-export default LoginForm;
+export default SigninForm;

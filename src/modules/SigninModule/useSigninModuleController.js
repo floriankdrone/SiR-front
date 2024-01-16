@@ -12,16 +12,19 @@ const useSigninModuleController = () => {
     isLoading: signingIn,
   } = useSessionCreate();
 
-  const onSignupSuccess = useCallback(() => navigate("/home"), [navigate]);
+  const onSigninSuccess = useCallback(
+    () => navigate("/home", { state: { toastMessage: "Welcome Back!" } }),
+    [navigate]
+  );
 
-  const handleLogin = (data) => {
+  const handleSignin = (data) => {
     login(data, {
-      onSuccess: onSignupSuccess,
+      onSuccess: onSigninSuccess,
     });
   };
 
   return {
-    handleLogin,
+    handleSignin,
     isSigningIn,
     failedToSignIn,
     successfulSignIn,
