@@ -2,6 +2,7 @@ import "./App.css";
 import HomeSection from "./sections/HomeSection/HomeSection";
 import AdminSection from "./sections/AdminSection/AdminSection";
 import LandingSection from "./sections/LandingSection/LandingSection";
+import AccountSection from "./sections/AccountSection/AccountSection";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Route, Routes, BrowserRouter } from "react-router-dom";
@@ -33,10 +34,8 @@ function App() {
                 }
               />
               <Route path="/home" element={<HomeSection />} />
-              <Route
-                path="/admin"
-                element={authenticated ? <AdminSection /> : <Navigate to="/" />}
-              />
+              <Route path="/account" element={<AccountSection />} />
+              <Route path="/admin" element={<AdminSection />} />
             </Routes>
           </BrowserRouter>
         </QueryClientProvider>

@@ -12,7 +12,7 @@ const useSignupModuleController = () => {
   } = useAuthenticationCreate();
 
   const onSignupSuccess = useCallback(
-    () => navigate("/home", { state: { toastMessage: "Welcome" } }),
+    () => navigate("/account", { state: { toastMessage: "Welcome" } }),
     [navigate]
   );
 

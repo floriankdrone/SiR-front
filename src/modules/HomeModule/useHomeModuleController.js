@@ -1,8 +1,15 @@
+import { useCallback, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
 import { usePostsIndex, usePostsCreate } from "./queries/posts";
 import { useDonationsCreate } from "./queries/donations";
-import { useCallback } from "react";
+import { useProfilesShow } from "../../queries/profiles";
 
 export const useHomeModuleController = () => {
+  const navigate = useNavigate();
+  const { data: profileData, error: fetchProfileError } = useProfilesShow({
+    retry: false,
+  });
   const { isPending, data: postList = [], refetch } = usePostsIndex();
   const {
     mutate: addDonation,
@@ -30,6 +37,10 @@ export const useHomeModuleController = () => {
     [addDonation, refetch]
   );
 
+  useEffect(() => {
+    if (fetchProfileError?.response?.status === 404) navigate("/account");
+  }, [fetchProfileError]);
+
   return {
     donationCreated,
     donationNotCreated,
@@ -39,5 +50,6 @@ export const useHomeModuleController = () => {
     postCreated,
     postList,
     postNotCreated,
+    profileData,
   };
 };

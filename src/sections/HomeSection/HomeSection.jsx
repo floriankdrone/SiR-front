@@ -1,11 +1,13 @@
 import React from "react";
 import HomeModule from "../../modules/HomeModule/HomeModule";
+import { useAuthentication } from "../../hooks/useAuthentication";
 import { Navigate } from "react-router-dom";
 
 function HomeSection() {
-  const authenticated = !!sessionStorage.getItem("session_start_time");
+  const { isAuthenticated } = useAuthentication();
 
-  if (!authenticated) return <Navigate to="/" />;
+  if (!isAuthenticated) return <Navigate to="/" />;
+
   return <HomeModule />;
 }
 
