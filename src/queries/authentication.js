@@ -41,9 +41,32 @@ const register = (registerData) =>
       sessionStorage.setItem("session_start_time", Date.now());
     });
 
+const logout = () =>
+  axios
+    .delete(
+      "http://localhost:3000/sessions/1337",
+      {},
+      {
+        withCredentials: true,
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      }
+    )
+    .then(() => {
+      sessionStorage.removeItem("session_start_time");
+    });
+
 export const useSessionCreate = () => {
   return useMutation({
     mutationFn: login,
+  });
+};
+
+export const useSessionDestroy = () => {
+  return useMutation({
+    mutationFn: logout,
   });
 };
 

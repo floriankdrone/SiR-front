@@ -9,7 +9,6 @@ const useSigninModuleController = () => {
     isLoading: isSigningIn,
     isError: failedToSignIn,
     isSuccess: successfulSignIn,
-    isLoading: signingIn,
   } = useSessionCreate();
 
   const onSigninSuccess = useCallback(
@@ -17,11 +16,10 @@ const useSigninModuleController = () => {
     [navigate]
   );
 
-  const handleSignin = (data) => {
+  const handleSignin = (data) =>
     login(data, {
       onSuccess: onSigninSuccess,
     });
-  };
 
   return {
     handleSignin,

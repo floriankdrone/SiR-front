@@ -1,10 +1,12 @@
-import { useHomeModuleController } from "./useHomeModuleController";
 import { Skeleton } from "@mui/material";
-import Post from "./views/Post";
-import Form from "./views/Form";
-import Feedback from "../../shared_views/Feedback";
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
+
+import Form from "./views/Form";
+import Feedback from "../../shared_views/Feedback";
+import MenuBar from "../../shared_views/MenuBar";
+import Post from "./views/Post";
+import { useHomeModuleController } from "./useHomeModuleController";
 
 function HomeModule() {
   const {
@@ -14,6 +16,7 @@ function HomeModule() {
     postList,
     handlePriceChange,
     handlePostCreation,
+    handleLogout,
     postCreated,
     postNotCreated,
   } = useHomeModuleController();
@@ -28,6 +31,7 @@ function HomeModule() {
   return (
     <>
       {toastMessage ? <Feedback message={toastMessage} /> : ""}
+      <MenuBar handleLogout={handleLogout} />
       <div style={{ marginBottom: "75px" }}>
         {isPending ? (
           <>

@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { usePostsIndex, usePostsCreate } from "./queries/posts";
 import { useDonationsCreate } from "./queries/donations";
 import { useProfilesShow } from "../../queries/profiles";
+import { useSessionDestroy } from "../../queries/authentication";
 
 export const useHomeModuleController = () => {
   const navigate = useNavigate();
@@ -21,6 +22,13 @@ export const useHomeModuleController = () => {
     isSuccess: postCreated,
     isError: postNotCreated,
   } = usePostsCreate();
+
+  const { mutate: logout } = useSessionDestroy();
+
+  const handleLogout = useCallback(async () => {
+    await logout();
+    navigate("/");
+  }, [logout, navigate]);
 
   const handlePostCreation = useCallback(
     ({ content }) => {
@@ -44,6 +52,7 @@ export const useHomeModuleController = () => {
   return {
     donationCreated,
     donationNotCreated,
+    handleLogout,
     handlePostCreation,
     handlePriceChange,
     isPending,
