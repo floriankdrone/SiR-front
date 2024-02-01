@@ -7,8 +7,19 @@ import {
   Button,
 } from "@mui/material";
 import PaymentsIcon from "@mui/icons-material/Payments";
+import DeleteIcon from "@mui/icons-material/Delete";
 
-const Post = ({ avatarUrl, username, date, content, price, handleDonate }) => {
+const Post = ({
+  avatarUrl,
+  canDelete,
+  content,
+  date,
+  handleDelete,
+  handleDonate,
+  id,
+  price,
+  username,
+}) => {
   return (
     <>
       <Card variant="outlined" style={{ margin: "16px", borderRadius: "12px" }}>
@@ -53,6 +64,17 @@ const Post = ({ avatarUrl, username, date, content, price, handleDonate }) => {
             >
               <PaymentsIcon />
             </Button>
+            {canDelete ? (
+              <Button
+                color="primary"
+                variant="extended"
+                onClick={() => handleDelete(id)}
+              >
+                <DeleteIcon />
+              </Button>
+            ) : (
+              ""
+            )}
           </div>
         </CardContent>
       </Card>

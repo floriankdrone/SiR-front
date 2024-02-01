@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from "react";
+import { useCallback } from "react";
 import { useSessionCreate } from "../../queries/authentication";
 import { useNavigate } from "react-router-dom";
 

@@ -16,9 +16,11 @@ function HomeModule() {
     postList,
     handlePriceChange,
     handlePostCreation,
+    handlePostDeletion,
     handleLogout,
     postCreated,
     postNotCreated,
+    profileData,
   } = useHomeModuleController();
 
   const location = useLocation();
@@ -26,12 +28,24 @@ function HomeModule() {
 
   useEffect(() => {
     window.history.replaceState({ toastMessage: undefined }, "");
-  }, undefined);
+  });
 
   return (
     <>
       {toastMessage ? <Feedback message={toastMessage} /> : ""}
-      <MenuBar handleLogout={handleLogout} />
+      {postNotCreated ? <Feedback message={"Failed to create Post"} /> : ""}
+      {donationCreated ? <Feedback message={"Donation Created"} /> : ""}
+      {donationNotCreated ? (
+        <Feedback message={"Failed to create Donation"} />
+      ) : (
+        ""
+      )}
+      {postCreated ? (
+        <Feedback message={"Post Created"} severity="success" />
+      ) : (
+        ""
+      )}
+      <MenuBar profileData={profileData} handleLogout={handleLogout} />
       <div style={{ marginBottom: "75px" }}>
         {isPending ? (
           <>
@@ -49,32 +63,24 @@ function HomeModule() {
             </Skeleton>
           </>
         ) : (
-          postList.map(({ id, text, price, username, updatedAt }, index) => {
-            return (
-              <Post
-                avatarUrl="https://media.istockphoto.com/vectors/default-profile-picture-avatar-photo-placeholder-vector-illustration-vector-id1223671392?k=6&m=1223671392&s=170667a&w=0&h=zP3l7WJinOFaGb2i1F4g8IS2ylw0FlIaa6x3tP9sebU%3D"
-                content={text}
-                date={updatedAt}
-                handleDonate={() => handlePriceChange(index, id, 10)}
-                id={id}
-                key={`Post${id}`}
-                price={price}
-                username={username}
-              />
-            );
-          })
-        )}
-        {postCreated ? (
-          <Feedback message={"Post Created"} severity="success" />
-        ) : (
-          ""
-        )}
-        {postNotCreated ? <Feedback message={"Failed to create Post"} /> : ""}
-        {donationCreated ? <Feedback message={"Donation Created"} /> : ""}
-        {donationNotCreated ? (
-          <Feedback message={"Failed to create Donation"} />
-        ) : (
-          ""
+          postList.map(
+            ({ id, mine, price, text, updatedAt, username }, index) => {
+              return (
+                <Post
+                  avatarUrl="https://media.istockphoto.com/vectors/default-profile-picture-avatar-photo-placeholder-vector-illustration-vector-id1223671392?k=6&m=1223671392&s=170667a&w=0&h=zP3l7WJinOFaGb2i1F4g8IS2ylw0FlIaa6x3tP9sebU%3D"
+                  canDelete={mine}
+                  content={text}
+                  date={updatedAt}
+                  handleDonate={() => handlePriceChange(index, id, 10)}
+                  handleDelete={handlePostDeletion}
+                  id={id}
+                  key={`Post${id}`}
+                  price={price}
+                  username={username}
+                />
+              );
+            }
+          )
         )}
       </div>
       <Form handlePostCreation={handlePostCreation} />
